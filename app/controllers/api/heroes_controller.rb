@@ -1,10 +1,9 @@
-class HeroesController < ApplicationController
+class Api::HeroesController < ApplicationController
   before_action :set_hero, only: [:show, :update, :destroy]
 
   # GET /heroes
   def index
-    @heroes = Hero.all
-
+    @heroes = Hero.all.sorted_by_name
     render json: @heroes
   end
 
@@ -46,6 +45,7 @@ class HeroesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def hero_params
+      # o .permit filtra os campos que queremos permitir
       params.require(:hero).permit(:name)
     end
 end
